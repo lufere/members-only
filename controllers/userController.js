@@ -84,3 +84,37 @@ exports.membership_post = [
         }
     }
 ]
+
+exports.admin_get = function(req, res){
+    if(req.user) res.render('admin');
+    res.redirect('/');
+}
+
+exports.admin_post = [
+    body('question').trim().escape().isInt({min:42, max:42}).withMessage('Wrong Answer!'),
+
+    (req,res,next)=>{
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty()){
+            res.render('admin', {errors:errors.array()});
+        }else{
+            // if(req.body.question != 4) res.render('admin', {wrong:true})
+            var user = new User({
+                first_name: req.user.first_name,
+                last_name: req.user.last_name,
+                username: req.user.username,
+                password: req.user.password,
+                membership: req.user.membership,
+                admin: true,
+                _id: req.user._id,
+            });
+            console.log(user);
+            // res.redirect('/');
+            User.findByIdAndUpdate(req.user._id, user, {}, function(err, user){
+                if(err) return next(err);
+                res.redirect('/');
+            })
+        }
+    }
+]

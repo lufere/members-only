@@ -1,19 +1,18 @@
 extends layout
 
 block content
-    h1 Become a member
+    h1 Become an admin
 
-    
     if errors
         for error in errors
             p!=error.msg
 
-    if !currentUser.membership
-        p Hello #{currentUser.full_name}, if you wish to become a member answer the following question:
+    if !currentUser.admin
+        p Hello #{currentUser.full_name}, if you wish to become an admin answer the following question:
         form(method='POST' action='')
             div.form-group
-                label(for='question') What is 2+2?
+                label(for='question') What is the answer to life, the universe and everything?
                 input#question.form-control(type='number' name='question')
             button.btn.btn-primary(type='submit') ANSWER
     else
-        p You're already a member!
+        p You're already an admin!
