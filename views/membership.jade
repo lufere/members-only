@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    h1 Become a member
+
+    
+    if errors
+        for error in errors
+            p!=error.msg
+
+    if currentUser.member
+        p Hello #{currentUser.full_name}, if you wish to become a member answer the following question:
+        form(method='POST' action='')
+            div.form-group
+                label(for='question') What is 2+2?
+                input#question.form-control(type='number' name='question')
+            button.btn.btn-primary(type='submit') ANSWER
+    else
+        p You're already a member!

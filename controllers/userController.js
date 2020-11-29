@@ -50,3 +50,37 @@ exports.log_in_post = [
         failureRedirect: "/"
       })
 ]
+
+exports.membership_get = function(req, res){
+    if(req.user) res.render('membership');
+    res.redirect('/');
+}
+
+exports.membership_post = [
+    body('question').trim().escape().isInt({min:4, max:4}).withMessage('Wrong Answer!'),
+
+    (req,res,next)=>{
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty()){
+            res.render('membership', {errors:errors.array()});
+        }else{
+            // if(req.body.question != 4) res.render('membership', {wrong:true})
+            var user = new User({
+                first_name: req.user.first_name,
+                last_name: req.user.last_name,
+                username: req.user.username,
+                password: req.user.password,
+                membership: true,
+                admin: req.user.admin,
+                _id: req.user._id,
+            });
+            console.log(user);
+            // res.redirect('/');
+            User.findByIdAndUpdate(req.user._id, user, {}, function(err, user){
+                if(err) return next(err);
+                res.redirect('/');
+            })
+        }
+    }
+]
