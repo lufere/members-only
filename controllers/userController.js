@@ -118,3 +118,8 @@ exports.admin_post = [
         }
     }
 ]
+
+exports.log_out = function(req, res){
+    req.logout();
+    res.redirect('/');
+}
