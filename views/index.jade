@@ -4,4 +4,5 @@ block content
   h1 Home Page
   p Welcome #{currentUser? currentUser.first_name:'Guest'}
 
-  a.btn.btn-primary(href='/log-out') LOG OUT
+  if currentUser
+    a.btn.btn-primary(href='/log-out') LOG OUT
