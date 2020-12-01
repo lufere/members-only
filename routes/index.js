@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Message = require('../models/messages');
 
 var userController = require('../controllers/userController');
 var messageController = require('../controllers/messageController');
@@ -7,7 +8,10 @@ var messageController = require('../controllers/messageController');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   // res.redirect('sign-up');
-  res.render('index', {user: req.user});
+  Message.find({}).populate('user').exec(function(err,messages){
+    if(err) return next(err);
+    res.render('index', {user: req.user, messages:messages});
+  });
 });
 
 router.get('/sign-up', userController.sign_up_get);
