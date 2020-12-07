@@ -52,8 +52,9 @@ exports.log_in_post = [
 ]
 
 exports.membership_get = function(req, res){
-    if(req.user) res.render('membership');
-    res.redirect('/');
+    if(req.user){
+        res.render('membership');
+    }else res.redirect('/');
 }
 
 exports.membership_post = [
@@ -86,8 +87,9 @@ exports.membership_post = [
 ]
 
 exports.admin_get = function(req, res){
-    if(req.user) res.render('admin');
-    res.redirect('/');
+    if(req.user) {
+        res.render('admin');
+    }else res.redirect('/');
 }
 
 exports.admin_post = [

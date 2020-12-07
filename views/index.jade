@@ -14,6 +14,10 @@ block content
       p= message.message
       if currentUser && currentUser.membership
         p Posted by #[strong #{message.user.full_name}] on #[strong #{message.timestamp}]
+      if currentUser && currentUser.admin
+        form(method='POST' action='delete-message')
+          input(type='hidden' name='message' value=message._id)
+          button.btn.btn-danger(type='submit') Delete
       hr
   else
     p No messages yet!

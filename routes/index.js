@@ -25,5 +25,6 @@ router.post('/admin', userController.admin_post);
 router.get('/log-out', userController.log_out);
 router.get('/new-message', messageController.new_message_get);
 router.post('/new-message', messageController.new_message_post);
+router.post('/delete-message', messageController.delete_message);
 
 module.exports = router;

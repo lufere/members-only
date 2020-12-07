@@ -29,3 +29,18 @@ exports.new_message_post = [
         })
     }
 ]
+
+exports.delete_message = [
+    body('message').trim().escape(),
+    (req,res,next)=>{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            res.redirect('/');
+        }else{
+            Message.findByIdAndDelete(req.body.message, function(err){
+                if(err) return next(err);
+                res.redirect('/');
+            });
+        }
+    }
+]
